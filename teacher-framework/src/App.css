@@ -221,10 +221,15 @@
 }
 
 .checklist ul,
-.references ul,
 .stage-support ul {
   margin: 0.45rem 0 0;
   padding-left: 1.15rem;
+}
+
+.references ul {
+  margin: 0.45rem 0 0;
+  padding-left: 0;
+  list-style: none;
 }
 
 .checklist li,
@@ -360,55 +365,81 @@
 }
 
 .steps-panel {
-  padding: 0.5rem;
+  padding: 0.7rem;
   display: grid;
-  gap: 0.35rem;
+  gap: 0.45rem;
+  background: linear-gradient(180deg, #ffffff 0%, #f8faff 100%);
 }
 
 .steps-panel button {
   text-align: left;
   display: grid;
-  grid-template-columns: 1.7rem 1fr 0.65rem;
+  grid-template-columns: 1.95rem 1fr 0.65rem;
   align-items: center;
-  gap: 0.5rem;
-  border: 1px solid transparent;
-  border-radius: 11px;
-  padding: 0.56rem 0.5rem;
-  background: transparent;
+  gap: 0.62rem;
+  border: 1px solid #e6ebf7;
+  border-radius: 13px;
+  padding: 0.65rem 0.58rem;
+  background: #ffffff;
   cursor: pointer;
+  transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease,
+    background-color 150ms ease;
+}
+
+.steps-panel button:hover {
+  border-color: #cdd9f3;
+  background: #fbfdff;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.05);
+  transform: translateY(-1px);
 }
 
 .steps-panel button.active {
-  border-color: #5b4bf5;
-  background: #f1efff;
+  border-color: #6d5dfa;
+  background: linear-gradient(90deg, rgba(91, 75, 245, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
+  box-shadow: 0 4px 12px rgba(91, 75, 245, 0.11);
 }
 
 .step-number {
-  width: 1.55rem;
-  height: 1.55rem;
+  width: 1.72rem;
+  height: 1.72rem;
   border-radius: 50%;
   display: grid;
   place-items: center;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: #4434dc;
-  background: #e8e6ff;
+  color: #4f46e5;
+  background: #ecebff;
+  transition: transform 150ms ease, background-color 150ms ease, color 150ms ease;
+}
+
+.steps-panel button.active .step-number {
+  background: #4f46e5;
+  color: #ffffff;
+  transform: scale(1.03);
 }
 
 .step-title {
-  font-size: 0.88rem;
-  font-weight: 640;
+  font-size: 0.95rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.28;
 }
 
 .step-state {
-  width: 0.5rem;
-  height: 0.5rem;
+  width: 0.45rem;
+  height: 0.45rem;
   border-radius: 50%;
-  background: #cbd5e1;
+  background: #c8d3e6;
+  justify-self: center;
+  transition: background-color 150ms ease;
+}
+
+.steps-panel button.active .step-state {
+  background: #7c8fb3;
 }
 
 .step-state.done {
-  background: #10b981;
+  background: #16a34a;
 }
 
 .actions {
@@ -430,29 +461,41 @@
 }
 
 .stage-card {
-  padding: 1rem;
+  padding: 1.35rem;
+  border: none;
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.06);
 }
 
 .stage-header {
-  margin-bottom: 0.9rem;
+  margin-bottom: 1.15rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.stage-header .phase-index {
+  color: #5b4bf5;
 }
 
 .stage-layout {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 330px;
-  gap: 0.9rem;
+  grid-template-columns: minmax(0, 1.46fr) minmax(220px, 0.54fr);
+  gap: 1.15rem;
+  align-items: start;
 }
 
 .stage-main {
   background: #ffffff;
   border-radius: 14px;
-  border: 1px solid #e0e7f5;
-  padding: 0.85rem;
+  border: none;
+  padding: 1.15rem 1.2rem;
+  display: grid;
+  align-content: start;
+  gap: 0.6rem;
 }
 
 .input-label {
   display: block;
-  margin-bottom: 0.45rem;
+  margin-bottom: 0.3rem;
   font-weight: 700;
 }
 
@@ -460,10 +503,12 @@
   width: 100%;
   border: 1px solid #cfd9ef;
   border-radius: 12px;
-  padding: 0.78rem;
+  padding: 0.95rem;
   font: inherit;
   color: #0f172a;
   resize: vertical;
+  line-height: 1.6;
+  min-height: 270px;
 }
 
 .stage-main textarea:focus {
@@ -472,35 +517,86 @@
 }
 
 .helper-line {
-  margin: 0.55rem 0 0;
+  margin: 0.75rem 0 0;
   color: #64748b;
   font-size: 0.9rem;
 }
 
+.inline-checklist {
+  margin-top: 1rem;
+  border: none;
+  border-radius: 14px;
+  background: transparent;
+  padding: 0.85rem 0.95rem;
+}
+
+.inline-checklist h3 {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.inline-checklist ul {
+  margin: 0.65rem 0 0;
+  padding-left: 0;
+  list-style: none;
+}
+
+.inline-checklist li {
+  margin-bottom: 0.58rem;
+}
+
+.inline-checklist label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.42rem;
+  line-height: 1.5;
+}
+
 .stage-support {
   display: grid;
-  gap: 0.6rem;
+  gap: 0.8rem;
+  align-content: start;
 }
 
 .stage-support details {
-  border: 1px solid #dde5f5;
+  border: none;
   border-radius: 14px;
-  background: #fff;
-  padding: 0.5rem 0.65rem;
+  background: #f8fafd;
+  padding: 0.52rem 0.68rem;
+  font-size: 0.92rem;
 }
 
 .stage-support summary {
   cursor: pointer;
   font-weight: 700;
+  font-size: 0.95rem;
 }
 
 .stage-support p {
-  margin: 0.52rem 0 0;
+  margin: 0.68rem 0 0;
   color: #334155;
+  line-height: 1.58;
+  font-size: 0.9rem;
+}
+
+.stage-support li {
+  line-height: 1.5;
+  font-size: 0.9rem;
+}
+
+.support-references ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.support-references a {
+  font-size: 0.9rem;
 }
 
 .wizard-nav {
-  margin-top: 0.85rem;
+  margin-top: 1.15rem;
   display: flex;
   justify-content: space-between;
 }

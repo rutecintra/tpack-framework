@@ -630,7 +630,7 @@ function App() {
           <article className="stage-card">
             <header className="stage-header">
               <p className="phase-index">
-                Step {currentPhaseIndex + 1} of {phases.length}
+                Phase {currentPhaseIndex + 1} of {phases.length}
               </p>
               <p className="macro">{currentPhase.macroQuestion}</p>
               <h2>{currentPhase.title}</h2>
@@ -652,6 +652,24 @@ function App() {
                   Tip: write objective, activity decisions, and how this phase connects to evidence
                   of learning.
                 </p>
+
+                <section className="inline-checklist" aria-label="Checklist">
+                  <h3>Checklist</h3>
+                  <ul>
+                    {currentPhase.checklist.map((item) => (
+                      <li key={item}>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={currentPhaseApply.selectedChecklist.includes(item)}
+                            onChange={() => toggleChecklist(currentPhase.id, item)}
+                          />
+                          {item}
+                        </label>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
               </section>
 
               <aside className="stage-support">
@@ -671,25 +689,7 @@ function App() {
                   </p>
                 </details>
 
-                <details open>
-                  <summary>Checklist</summary>
-                  <ul>
-                    {currentPhase.checklist.map((item) => (
-                      <li key={item}>
-                        <label>
-                          <input
-                            type="checkbox"
-                            checked={currentPhaseApply.selectedChecklist.includes(item)}
-                            onChange={() => toggleChecklist(currentPhase.id, item)}
-                          />
-                          {item}
-                        </label>
-                      </li>
-                    ))}
-                  </ul>
-                </details>
-
-                <details>
+                <details className="support-references">
                   <summary>ABNT references</summary>
                   <ul>
                     {currentPhase.references.map((reference) => (
