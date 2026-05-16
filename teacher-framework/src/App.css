@@ -63,6 +63,56 @@
   color: #475569;
 }
 
+.topbar-controls {
+  display: grid;
+  gap: 1rem;
+  justify-items: end;
+}
+
+.language-switch {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  width: 76px;
+  height: 34px;
+  border: 1px solid #dbe2f0;
+  border-radius: 999px;
+  background: #ffffff;
+  padding: 3px;
+  cursor: pointer;
+}
+
+.language-switch .flag {
+  position: relative;
+  z-index: 2;
+  font-size: 1rem;
+  text-align: center;
+  line-height: 1;
+  opacity: 0.56;
+  transition: opacity 130ms ease;
+}
+
+.language-switch .flag.active {
+  opacity: 1;
+}
+
+.language-switch .switch-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 34px;
+  height: 26px;
+  border-radius: 999px;
+  background: #eef2ff;
+  border: 1px solid #c7d2fe;
+  transition: transform 170ms ease;
+}
+
+.language-switch.port .switch-thumb {
+  transform: translateX(36px);
+}
+
 .mode-picker {
   display: inline-flex;
   gap: 0.35rem;
@@ -71,6 +121,7 @@
   padding: 0.3rem;
   background: #ffffff;
   border: 1px solid #dbe2f0;
+  justify-self: end;
 }
 
 .mode-picker button,
@@ -680,6 +731,15 @@
     font-size: 1.35rem;
   }
 
+  .topbar-controls {
+    width: 100%;
+    justify-items: stretch;
+  }
+
+  .language-switch {
+    justify-self: start;
+  }
+
   .intro-strip {
     grid-template-columns: 1fr;
   }
@@ -884,6 +944,10 @@
 }
 
 @media (max-width: 640px) {
+  .topbar-controls {
+    gap: 0.7rem;
+  }
+
   .mode-picker {
     width: 100%;
     display: grid;

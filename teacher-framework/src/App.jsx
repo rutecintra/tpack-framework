@@ -14,7 +14,144 @@ const sourceLinks = {
   didactics: 'file:///Users/rutecintra/Documents/framework/sources/Livro%20Didatica.pdf',
 }
 
-const phases = [
+const uiText = {
+  en: {
+    kicker: 'Teacher Experience Studio',
+    title: 'Instructional Design Framework',
+    subtitle: 'A modern workspace to design, validate, and export technology-mediated lessons.',
+    languageSwitch: {
+      ariaLabel: 'Switch language between English and Portuguese (Brazil)',
+      title: 'Switch language',
+    },
+    modes: {
+      framework: 'Framework',
+      apply: 'Apply',
+    },
+    introTiles: [
+      { label: '7 phases', value: 'Pedagogy-first structure' },
+      { label: 'ABNT grounded', value: 'References + source links by phase' },
+      { label: 'Export-ready', value: 'PDF output for planning documentation' },
+    ],
+    phase: 'Phase',
+    previous: 'Previous',
+    next: 'Next',
+    of: 'of',
+    navigation: {
+      prevAria: (title) => `Go to previous phase: ${title}`,
+      nextAria: (title) => `Go to next phase: ${title}`,
+      mobileAria: 'Mobile framework navigation',
+      phaseNavAria: 'Framework phase navigation',
+      gotoPhaseAria: (index, title) => `Go to phase ${index}: ${title}`,
+      gotoPrevPhaseAria: 'Go to previous phase',
+      gotoNextPhaseAria: 'Go to next phase',
+    },
+    labels: {
+      directedQuestion: 'Directed question',
+      whatIs: 'What it is',
+      objective: 'Objective',
+      example: 'Helena example',
+      checklist: 'Decisions / checklist',
+      references: 'ABNT references',
+      designProgress: 'Design progress',
+      currentPhase: 'Current phase',
+      loadDraft: 'Load Helena draft',
+      reset: 'Reset',
+      openPdfPreview: 'Open PDF preview',
+      buildPhase: 'Build this phase',
+      textareaPlaceholder: 'Write your pedagogical architecture for this phase...',
+      tip: 'Tip: write objective, activity decisions, and how this phase connects to evidence of learning.',
+      guidance: 'Guidance',
+      completedPhase: 'Completed phase',
+      pendingPhase: 'Pending phase',
+      previousPhase: 'Previous phase',
+      nextPhase: 'Next phase',
+      phasesCompleted: (completed, total) => `${completed} of ${total} phases completed`,
+    },
+    pdf: {
+      reportTitle: 'Instructional Design Framework Report',
+      generatedOn: (date, time) => `Generated on ${date} at ${time}.`,
+      macroQuestion: 'Macro question',
+      directedQuestion: 'Directed question',
+      teacherArchitecture: 'Teacher architecture',
+      notFilled: 'Not filled yet.',
+      checkedDecisions: 'Checked decisions',
+      noChecklist: 'No checklist item selected.',
+      references: 'ABNT references:',
+      reference: (index) => `Reference ${index}`,
+      sourceLink: 'Source link',
+    },
+  },
+  port: {
+    kicker: 'Estúdio de Experiência Docente',
+    title: 'Framework de Design Instrucional',
+    subtitle:
+      'Um espaço moderno para desenhar, validar e exportar aulas mediadas por tecnologia.',
+    languageSwitch: {
+      ariaLabel: 'Trocar idioma entre Inglês e Português (Brasil)',
+      title: 'Trocar idioma',
+    },
+    modes: {
+      framework: 'Framework',
+      apply: 'Aplicar',
+    },
+    introTiles: [
+      { label: '7 fases', value: 'Estrutura com foco na pedagogia' },
+      { label: 'Base ABNT', value: 'Referências + links de fonte por fase' },
+      { label: 'Pronto para exportar', value: 'Saída em PDF para documentação do plano' },
+    ],
+    phase: 'Fase',
+    previous: 'Anterior',
+    next: 'Próxima',
+    of: 'de',
+    navigation: {
+      prevAria: (title) => `Ir para fase anterior: ${title}`,
+      nextAria: (title) => `Ir para próxima fase: ${title}`,
+      mobileAria: 'Navegação mobile do framework',
+      phaseNavAria: 'Navegação das fases do framework',
+      gotoPhaseAria: (index, title) => `Ir para fase ${index}: ${title}`,
+      gotoPrevPhaseAria: 'Ir para fase anterior',
+      gotoNextPhaseAria: 'Ir para próxima fase',
+    },
+    labels: {
+      directedQuestion: 'Pergunta direcionadora',
+      whatIs: 'O que é',
+      objective: 'Objetivo',
+      example: 'Exemplo Helena',
+      checklist: 'Decisões / checklist',
+      references: 'Referências ABNT',
+      designProgress: 'Progresso do design',
+      currentPhase: 'Fase atual',
+      loadDraft: 'Carregar rascunho da Helena',
+      reset: 'Resetar',
+      openPdfPreview: 'Abrir prévia em PDF',
+      buildPhase: 'Construa esta fase',
+      textareaPlaceholder: 'Escreva sua arquitetura pedagógica para esta fase...',
+      tip: 'Dica: descreva objetivo, decisões da atividade e como esta fase se conecta às evidências de aprendizagem.',
+      guidance: 'Orientações',
+      completedPhase: 'Fase concluída',
+      pendingPhase: 'Fase pendente',
+      previousPhase: 'Fase anterior',
+      nextPhase: 'Próxima fase',
+      phasesCompleted: (completed, total) => `${completed} de ${total} fases concluídas`,
+    },
+    pdf: {
+      reportTitle: 'Relatório do Framework de Design Instrucional',
+      generatedOn: (date, time) => `Gerado em ${date} às ${time}.`,
+      macroQuestion: 'Pergunta macro',
+      directedQuestion: 'Pergunta direcionadora',
+      teacherArchitecture: 'Arquitetura docente',
+      notFilled: 'Ainda não preenchido.',
+      checkedDecisions: 'Decisões marcadas',
+      noChecklist: 'Nenhum item do checklist selecionado.',
+      references: 'Referências ABNT:',
+      reference: (index) => `Referência ${index}`,
+      sourceLink: 'Link da fonte',
+    },
+  },
+}
+
+const phasesByLanguage = {
+  en: [
   {
     id: 'learning-objectives',
     title: 'Learning Objectives',
@@ -246,10 +383,244 @@ const phases = [
       },
     ],
   },
-]
+  ],
+  port: [
+    {
+      id: 'learning-objectives',
+      title: 'Objetivos de Aprendizagem',
+      macroQuestion: 'O que os estudantes devem aprender?',
+      directedQuestion:
+        'O que os estudantes precisam aprender, desenvolver ou demonstrar ao final desta atividade mediada por tecnologia?',
+      whatIs:
+        'Defina a intenção pedagógica antes de escolher qualquer ferramenta. Esclareça primeiro conceitos, habilidades, competências e evidências de aprendizagem.',
+      objective:
+        'Garantir que a atividade parta dos objetivos de aprendizagem e alinhe conteúdo, pedagogia e tecnologia com coerência.',
+      example:
+        'Estudantes desenham um framework digital que conecta objetivos, estratégias, recursos, interações, avaliação e acessibilidade em um design instrucional coerente.',
+      checklist: [
+        'Definir o conteúdo central.',
+        'Definir os resultados de aprendizagem esperados.',
+        'Listar as habilidades que os estudantes devem desenvolver.',
+        'Definir evidências de aprendizagem.',
+        'Confirmar se colaboração/criação/resolução de problemas é necessária.',
+        'Justificar se a tecnologia amplia a aprendizagem em vez de apenas substituir práticas tradicionais.',
+      ],
+      references: [
+        {
+          abnt: 'KOEHLER, Matthew J.; MISHRA, Punya; AKCAOGLU, Mete; ROSENBERG, Joshua M. The technological pedagogical content knowledge framework for teachers and teacher educators. Commonwealth Educational Media Centre for Asia, 2013.',
+          link: sourceLinks.tpack,
+          label: 'Abrir fonte (Koehler et al., 2013)',
+        },
+        {
+          abnt: 'RÊGO, Luciane Borges do; LIMA, Maria Vitória Ribas de Oliveira. Didática. Recife: UPE, 2010.',
+          link: sourceLinks.didactics,
+          label: 'Abrir fonte (Livro de Didática)',
+        },
+      ],
+    },
+    {
+      id: 'student-profile',
+      title: 'Perfil dos Estudantes e Contexto',
+      macroQuestion: 'Para quem você está ensinando?',
+      directedQuestion:
+        'Quem são seus estudantes, qual repertório prévio possuem e quais condições reais moldam sua participação?',
+      whatIs:
+        'Diagnostique conhecimentos prévios, familiaridade digital, condições de acesso, padrões de participação e necessidades de inclusão.',
+      objective:
+        'Projetar uma atividade viável e contextualizada para estudantes reais, não para um grupo idealizado.',
+      example:
+        'Turma presencial com fluência digital mista. A maioria usa celular e notebook, mas precisa de divisão clara de papéis, tempo de ambientação e mediação docente guiada.',
+      checklist: [
+        'Descrever os estudantes e seu contexto.',
+        'Mapear conhecimentos prévios sobre conteúdo e ferramentas digitais.',
+        'Verificar condições de dispositivos e conectividade.',
+        'Identificar requisitos de acessibilidade.',
+        'Estimar nível de autonomia deste grupo.',
+        'Definir mediação docente necessária durante a atividade.',
+      ],
+      references: [
+        {
+          abnt: 'COLL, César; MONEREO, Carles (org.). Psicologia da educação virtual: aprender e ensinar com as tecnologias da informação e da comunicação. Porto Alegre: Artmed, 2010.',
+          link: sourceLinks.collMonereo,
+          label: 'Abrir fonte (Coll & Monereo)',
+        },
+        {
+          abnt: 'LIMA, Ivonaldo Pereira de. Prática docente com uso das tecnologias digitais da informação e comunicação: possibilidades e limites. Arapiraca: UFAL, 2016.',
+          link: sourceLinks.limaTdic,
+          label: 'Abrir fonte (Lima, 2016)',
+        },
+      ],
+    },
+    {
+      id: 'technology-choice',
+      title: 'Escolha da Tecnologia',
+      macroQuestion: 'Com o que você vai ensinar?',
+      directedQuestion:
+        'Qual tecnologia será usada e por que ela é pedagogicamente adequada aos seus objetivos e ao perfil dos estudantes?',
+      whatIs:
+        'Selecione ferramentas digitais com base no valor educacional, não na novidade. A ferramenta precisa apoiar ações de aprendizagem, não distrair.',
+      objective:
+        'Escolher uma ferramenta que apoie participação, colaboração, autoria, feedback e viabilidade instrucional.',
+      example:
+        'Usar Miro, Padlet ou Canva colaborativo para que grupos coconstruam um framework visual, comentem em tempo real e iterem com feedback docente.',
+      checklist: [
+        'Nomear a ferramenta principal.',
+        'Declarar a função pedagógica da ferramenta.',
+        'Verificar possibilidades de colaboração e autoria.',
+        'Checar viabilidade mobile e complexidade para o tempo disponível.',
+        'Checar requisitos de dados/privacidade (contas, permissões).',
+        'Definir ferramenta alternativa se a principal falhar.',
+      ],
+      references: [
+        {
+          abnt: 'HAYASHI, Elaine C. S.; BARANAUSKAS, M. Cecília C. Affectibility and design workshops: taking actions towards more sensible design. In: BRAZILIAN SYMPOSIUM ON HUMAN FACTORS IN COMPUTING SYSTEMS, 2013, Manaus. Proceedings [...]. 2013.',
+          link: sourceLinks.interadPaper,
+          label: 'Abrir fonte (Artigo Affectibility)',
+        },
+        {
+          abnt: 'GUTIÉRREZ POSADA, Julián Esteban. Interfaces tangíveis e o design de ambientes educacionais para co-construção de narrativas. Tecnologias, Sociedade e Conhecimento, Campinas, v. 3, n. 1, p. 104-107, 2015.',
+          link: sourceLinks.tangibleInterfaces,
+          label: 'Abrir fonte (Posada, 2015)',
+        },
+      ],
+    },
+    {
+      id: 'activity-sequence',
+      title: 'Sequência da Atividade',
+      macroQuestion: 'Como você vai ensinar?',
+      directedQuestion:
+        'Qual sequência de passos, tempos, ações e interações estrutura a atividade do início ao fim?',
+      whatIs:
+        'Organize o fluxo de aprendizagem em momentos antes/durante/depois, com ações claras dos estudantes, mediação docente e entregáveis esperados.',
+      objective:
+        'Transformar os objetivos de aprendizagem em um percurso claro e executável, evitando improvisação e mantendo coerência.',
+      example:
+        'Antes da aula, estudantes leem as fontes. Em aula, analisam o problema de ABP e completam cada fase do framework em grupos. Após socialização, revisam com feedback dos pares e da docente.',
+      checklist: [
+        'Definir o que os estudantes fazem antes da aula.',
+        'Definir disparador inicial e desafio.',
+        'Definir composição dos grupos e papéis.',
+        'Definir blocos de tempo para cada fase.',
+        'Definir checkpoints de mediação docente.',
+        'Definir etapas de apresentação e revisão.',
+      ],
+      references: [
+        {
+          abnt: 'RÊGO, Luciane Borges do; LIMA, Maria Vitória Ribas de Oliveira. Didática. Recife: UPE, 2010.',
+          link: sourceLinks.didactics,
+          label: 'Abrir fonte (Livro de Didática)',
+        },
+        {
+          abnt: 'KOEHLER, Matthew J.; MISHRA, Punya; AKCAOGLU, Mete; ROSENBERG, Joshua M. The technological pedagogical content knowledge framework for teachers and teacher educators. Commonwealth Educational Media Centre for Asia, 2013.',
+          link: sourceLinks.tpack,
+          label: 'Abrir fonte (Framework TPACK)',
+        },
+      ],
+    },
+    {
+      id: 'assessment-feedback',
+      title: 'Avaliação e Feedback',
+      macroQuestion: 'Quais são as evidências de aprendizagem?',
+      directedQuestion:
+        'Como a aprendizagem será acompanhada durante o processo e quais ciclos de feedback ajudarão os estudantes a melhorar?',
+      whatIs:
+        'Defina critérios, instrumentos e ciclos de feedback que avaliem processo e produto, incluindo oportunidades de revisão.',
+      objective:
+        'Usar a avaliação como orientação formativa, e não apenas como pontuação final.',
+      example:
+        'Os grupos entregam um framework visual. Uma rubrica avalia coerência, clareza, fundamentação em referências, planejamento de acessibilidade e mitigação de riscos. Feedback de pares e docente gera revisão.',
+      checklist: [
+        'Definir evidência/produto final.',
+        'Definir critérios vinculados aos objetivos.',
+        'Incluir indicadores de processo e produto.',
+        'Planejar feedback de pares e da docente.',
+        'Permitir revisão após feedback.',
+        'Usar rubrica concisa.',
+      ],
+      references: [
+        {
+          abnt: 'RÊGO, Luciane Borges do; LIMA, Maria Vitória Ribas de Oliveira. Didática. Recife: UPE, 2010.',
+          link: sourceLinks.didactics,
+          label: 'Abrir fonte (Capítulo de avaliação em Didática)',
+        },
+        {
+          abnt: 'LIMA, Ivonaldo Pereira de. Prática docente com uso das tecnologias digitais da informação e comunicação: possibilidades e limites. Arapiraca: UFAL, 2016.',
+          link: sourceLinks.limaTdic,
+          label: 'Abrir fonte (Lima, 2016)',
+        },
+      ],
+    },
+    {
+      id: 'accessibility-engagement',
+      title: 'Acessibilidade, Engajamento e Carga Cognitiva',
+      macroQuestion: 'Como a atividade é acessível e engajadora?',
+      directedQuestion:
+        'A atividade permite participação real sem barreiras técnicas, visuais, de comunicação ou cognitivas?',
+      whatIs:
+        'Revise condições de inclusão e usabilidade: legibilidade, instruções claras, prevenção de sobrecarga de ferramentas e alternativas de participação.',
+      objective:
+        'Evitar que a tecnologia vire barreira e aumentar o engajamento significativo.',
+      example:
+        'Usar uma ferramenta principal, instruções claras em etapas, alto contraste e alternativas (texto/áudio/contribuição por papéis) para estudantes com restrições de acesso.',
+      checklist: [
+        'Verificar clareza das instruções e da linguagem.',
+        'Verificar legibilidade visual e contraste.',
+        'Limitar a quantidade de ferramentas na mesma atividade.',
+        'Incluir exemplo/template de ambientação.',
+        'Oferecer caminhos alternativos de participação.',
+        'Garantir que a tarefa exija criação ativa ou reflexão.',
+      ],
+      references: [
+        {
+          abnt: 'COLL, César; MONEREO, Carles (org.). Psicologia da educação virtual: aprender e ensinar com as tecnologias da informação e da comunicação. Porto Alegre: Artmed, 2010.',
+          link: sourceLinks.collMonereo,
+          label: 'Abrir fonte (Psicologia da educação virtual)',
+        },
+        {
+          abnt: 'GUTIÉRREZ POSADA, Julián Esteban. Interfaces tangíveis e o design de ambientes educacionais para co-construção de narrativas. Tecnologias, Sociedade e Conhecimento, Campinas, v. 3, n. 1, p. 104-107, 2015.',
+          link: sourceLinks.tangibleInterfaces,
+          label: 'Abrir fonte (Interfaces tangíveis)',
+        },
+      ],
+    },
+    {
+      id: 'risks-alternatives',
+      title: 'Limitações, Riscos e Alternativas',
+      macroQuestion: 'O que pode dar errado?',
+      directedQuestion:
+        'Quais riscos técnicos, pedagógicos e organizacionais podem comprometer a atividade e quais alternativas estão prontas?',
+      whatIs:
+        'Antecipe pontos de falha e defina planos de contingência antes da implementação.',
+      objective: 'Aumentar a resiliência e evitar dependência de condições ideais.',
+      example:
+        'Se a plataforma principal cair, migrar para Slides/docs. Se a participação for desigual, atribuir papéis rotativos. Se os resultados forem superficiais, exigir justificativa pedagógica explícita em cada fase.',
+      checklist: [
+        'Listar riscos técnicos e suas mitigação.',
+        'Listar riscos pedagógicos e suas mitigação.',
+        'Listar riscos de participação e equidade.',
+        'Definir fluxo alternativo e responsáveis.',
+        'Definir ações de ajuste pós-feedback.',
+        'Verificar risco de tempo e sobrecarga.',
+      ],
+      references: [
+        {
+          abnt: 'LIMA, Ivonaldo Pereira de. Prática docente com uso das tecnologias digitais da informação e comunicação: possibilidades e limites. Arapiraca: UFAL, 2016.',
+          link: sourceLinks.limaTdic,
+          label: 'Abrir fonte (Limites e possibilidades das TDIC)',
+        },
+        {
+          abnt: 'KOEHLER, Matthew J.; MISHRA, Punya; AKCAOGLU, Mete; ROSENBERG, Joshua M. The technological pedagogical content knowledge framework for teachers and teacher educators. Commonwealth Educational Media Centre for Asia, 2013.',
+          link: sourceLinks.tpack,
+          label: 'Abrir fonte (TPACK e contexto)',
+        },
+      ],
+    },
+  ],
+}
 
-const defaultApplyData = phases.reduce((acc, phase) => {
-  acc[phase.id] = {
+const phaseIds = phasesByLanguage.en.map((phase) => phase.id)
+const defaultApplyData = phaseIds.reduce((acc, phaseId) => {
+  acc[phaseId] = {
     plan: '',
     selectedChecklist: [],
   }
@@ -258,15 +629,18 @@ const defaultApplyData = phases.reduce((acc, phase) => {
 
 function App() {
   const [mode, setMode] = useState('framework')
+  const [language, setLanguage] = useState('en')
   const [applyData, setApplyData] = useState(defaultApplyData)
   const [currentPhaseIndex, setCurrentPhaseIndex] = useState(0)
   const [frameworkPhaseIndex, setFrameworkPhaseIndex] = useState(0)
+  const texts = uiText[language]
+  const phases = phasesByLanguage[language]
 
   const completion = useMemo(() => {
     const completed = phases.filter((phase) => applyData[phase.id].plan.trim().length > 0).length
     const total = phases.length
     return { completed, total, percentage: Math.round((completed / total) * 100) }
-  }, [applyData])
+  }, [applyData, phases])
 
   const updatePlan = (phaseId, value) => {
     setApplyData((current) => ({
@@ -278,12 +652,12 @@ function App() {
     }))
   }
 
-  const toggleChecklist = (phaseId, item) => {
+  const toggleChecklist = (phaseId, itemIndex) => {
     setApplyData((current) => {
       const selected = current[phaseId].selectedChecklist
-      const nextSelected = selected.includes(item)
-        ? selected.filter((entry) => entry !== item)
-        : [...selected, item]
+      const nextSelected = selected.includes(itemIndex)
+        ? selected.filter((entry) => entry !== itemIndex)
+        : [...selected, itemIndex]
 
       return {
         ...current,
@@ -300,7 +674,7 @@ function App() {
       phases.reduce((acc, phase) => {
         acc[phase.id] = {
           plan: phase.example,
-          selectedChecklist: [...phase.checklist],
+          selectedChecklist: phase.checklist.map((_, index) => index),
         }
         return acc
       }, {}),
@@ -337,6 +711,10 @@ function App() {
   }
 
   useEffect(() => {
+    document.documentElement.lang = language === 'port' ? 'pt-BR' : 'en'
+  }, [language])
+
+  useEffect(() => {
     if (mode !== 'framework') {
       return undefined
     }
@@ -355,7 +733,7 @@ function App() {
     return () => {
       window.removeEventListener('keydown', handleKeydown)
     }
-  }, [mode])
+  }, [mode, phases.length])
 
   const frameworkCurrent = phases[frameworkPhaseIndex]
   const frameworkPrevIndex = (frameworkPhaseIndex - 1 + phases.length) % phases.length
@@ -403,40 +781,41 @@ function App() {
       cursorY += gapAfter
     }
 
-    writeLine('Instructional Design Framework Report', { fontSize: 18, bold: true, gapAfter: 12 })
+    writeLine(texts.pdf.reportTitle, { fontSize: 18, bold: true, gapAfter: 12 })
     writeLine(
-      `Generated on ${new Date().toLocaleDateString('en-US')} at ${new Date().toLocaleTimeString(
-        'en-US',
-      )}.`,
+      texts.pdf.generatedOn(
+        new Date().toLocaleDateString(language === 'port' ? 'pt-BR' : 'en-US'),
+        new Date().toLocaleTimeString(language === 'port' ? 'pt-BR' : 'en-US'),
+      ),
       { fontSize: 11, gapAfter: 22, lineHeight: 18 },
     )
     drawSeparator(0, 28)
 
     phases.forEach((phase, index) => {
-      writeLine(`Phase ${index + 1}: ${phase.title}`, { fontSize: 15, bold: true, gapAfter: 12 })
-      writeLine(`Macro question: ${phase.macroQuestion}`, { fontSize: 12, gapAfter: 10 })
-      writeLine(`Directed question: ${phase.directedQuestion}`, { fontSize: 12, gapAfter: 12 })
+      writeLine(`${texts.phase} ${index + 1}: ${phase.title}`, { fontSize: 15, bold: true, gapAfter: 12 })
+      writeLine(`${texts.pdf.macroQuestion}: ${phase.macroQuestion}`, { fontSize: 12, gapAfter: 10 })
+      writeLine(`${texts.pdf.directedQuestion}: ${phase.directedQuestion}`, { fontSize: 12, gapAfter: 12 })
       writeLine(
-        `Teacher architecture: ${
-          applyData[phase.id].plan.trim() || 'Not filled yet.'
+        `${texts.pdf.teacherArchitecture}: ${
+          applyData[phase.id].plan.trim() || texts.pdf.notFilled
         }`,
         { fontSize: 12, gapAfter: 12 },
       )
 
       const checklistText =
         applyData[phase.id].selectedChecklist.length > 0
-          ? applyData[phase.id].selectedChecklist.join(' | ')
-          : 'No checklist item selected.'
-      writeLine(`Checked decisions: ${checklistText}`, { fontSize: 12, gapAfter: 12 })
+          ? applyData[phase.id].selectedChecklist.map((itemIndex) => phase.checklist[itemIndex]).join(' | ')
+          : texts.pdf.noChecklist
+      writeLine(`${texts.pdf.checkedDecisions}: ${checklistText}`, { fontSize: 12, gapAfter: 12 })
 
-      writeLine('ABNT references:', { fontSize: 10, bold: true, gapAfter: 5, lineHeight: 15 })
+      writeLine(texts.pdf.references, { fontSize: 10, bold: true, gapAfter: 5, lineHeight: 15 })
       phase.references.forEach((reference, referenceIndex) => {
-        writeLine(`Reference ${referenceIndex + 1}: ${reference.abnt}`, {
+        writeLine(`${texts.pdf.reference(referenceIndex + 1)}: ${reference.abnt}`, {
           fontSize: 11,
           gapAfter: 2,
           lineHeight: 17,
         })
-        writeLine(`Source link: ${reference.link}`, { fontSize: 11, gapAfter: 2, lineHeight: 17 })
+        writeLine(`${texts.pdf.sourceLink}: ${reference.link}`, { fontSize: 11, gapAfter: 2, lineHeight: 17 })
       })
       drawSeparator(6, 24)
     })
@@ -452,30 +831,45 @@ function App() {
 
       <header className="topbar">
         <div>
-          <p className="kicker">Teacher Experience Studio</p>
-          <h1>Instructional Design Framework</h1>
-          <p className="subtitle">
-            A modern workspace to design, validate, and export technology-mediated lessons.
-          </p>
+          <p className="kicker">{texts.kicker}</p>
+          <h1>{texts.title}</h1>
+          <p className="subtitle">{texts.subtitle}</p>
         </div>
-        <div className="mode-picker">
+        <div className="topbar-controls">
           <button
             type="button"
-            className={mode === 'framework' ? 'active' : ''}
-            onClick={() => setMode('framework')}
+            className={`language-switch ${language === 'port' ? 'port' : 'en'}`}
+            onClick={() => setLanguage((current) => (current === 'en' ? 'port' : 'en'))}
+            aria-label={texts.languageSwitch.ariaLabel}
+            title={texts.languageSwitch.title}
           >
-            Framework
+            <span className={`flag ${language === 'en' ? 'active' : ''}`} aria-hidden="true">
+              🇺🇸
+            </span>
+            <span className={`flag ${language === 'port' ? 'active' : ''}`} aria-hidden="true">
+              🇧🇷
+            </span>
+            <span className="switch-thumb" aria-hidden="true" />
           </button>
-          <button
-            type="button"
-            className={mode === 'apply' ? 'active' : ''}
-            onClick={() => {
-              setMode('apply')
-              setCurrentPhaseIndex(0)
-            }}
-          >
-            Apply
-          </button>
+          <div className="mode-picker">
+            <button
+              type="button"
+              className={mode === 'framework' ? 'active' : ''}
+              onClick={() => setMode('framework')}
+            >
+              {texts.modes.framework}
+            </button>
+            <button
+              type="button"
+              className={mode === 'apply' ? 'active' : ''}
+              onClick={() => {
+                setMode('apply')
+                setCurrentPhaseIndex(0)
+              }}
+            >
+              {texts.modes.apply}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -483,16 +877,16 @@ function App() {
         <>
           <section className="intro-strip">
             <div className="intro-tile">
-              <span>7 phases</span>
-              <strong>Pedagogy-first structure</strong>
+              <span>{texts.introTiles[0].label}</span>
+              <strong>{texts.introTiles[0].value}</strong>
             </div>
             <div className="intro-tile">
-              <span>ABNT grounded</span>
-              <strong>References + source links by phase</strong>
+              <span>{texts.introTiles[1].label}</span>
+              <strong>{texts.introTiles[1].value}</strong>
             </div>
             <div className="intro-tile">
-              <span>Export-ready</span>
-              <strong>PDF output for planning documentation</strong>
+              <span>{texts.introTiles[2].label}</span>
+              <strong>{texts.introTiles[2].value}</strong>
             </div>
           </section>
 
@@ -509,34 +903,34 @@ function App() {
                     goFrameworkLeft()
                   }
                 }}
-                aria-label={`Go to previous phase: ${frameworkPrev.title}`}
+                aria-label={texts.navigation.prevAria(frameworkPrev.title)}
               >
-                <p className="phase-index">Phase {frameworkPrevIndex + 1}</p>
+                <p className="phase-index">{texts.phase} {frameworkPrevIndex + 1}</p>
                 <p className="macro">{frameworkPrev.macroQuestion}</p>
                 <h3>{frameworkPrev.title}</h3>
                 <p>
-                  <strong>Objective:</strong> {frameworkPrev.objective}
+                  <strong>{texts.labels.objective}:</strong> {frameworkPrev.objective}
                 </p>
               </article>
 
               <article className="phase-card center-card">
-                <p className="phase-index">Phase {frameworkPhaseIndex + 1}</p>
+                <p className="phase-index">{texts.phase} {frameworkPhaseIndex + 1}</p>
                 <p className="macro">{frameworkCurrent.macroQuestion}</p>
                 <h3>{frameworkCurrent.title}</h3>
                 <p>
-                  <strong>Directed question:</strong> {frameworkCurrent.directedQuestion}
+                  <strong>{texts.labels.directedQuestion}:</strong> {frameworkCurrent.directedQuestion}
                 </p>
                 <p>
-                  <strong>What it is:</strong> {frameworkCurrent.whatIs}
+                  <strong>{texts.labels.whatIs}:</strong> {frameworkCurrent.whatIs}
                 </p>
                 <p>
-                  <strong>Objective:</strong> {frameworkCurrent.objective}
+                  <strong>{texts.labels.objective}:</strong> {frameworkCurrent.objective}
                 </p>
                 <p>
-                  <strong>Helena example:</strong> {frameworkCurrent.example}
+                  <strong>{texts.labels.example}:</strong> {frameworkCurrent.example}
                 </p>
                 <div className="checklist">
-                  <strong>Decisions / checklist</strong>
+                  <strong>{texts.labels.checklist}</strong>
                   <ul>
                     {frameworkCurrent.checklist.map((item) => (
                       <li key={item}>{item}</li>
@@ -544,7 +938,7 @@ function App() {
                   </ul>
                 </div>
                 <details className="references references-collapse">
-                  <summary>ABNT references</summary>
+                  <summary>{texts.labels.references}</summary>
                   <ul>
                     {frameworkCurrent.references.map((reference) => (
                       <li key={reference.abnt}>
@@ -569,37 +963,37 @@ function App() {
                     goFrameworkRight()
                   }
                 }}
-                aria-label={`Go to next phase: ${frameworkNext.title}`}
+                aria-label={texts.navigation.nextAria(frameworkNext.title)}
               >
-                <p className="phase-index">Phase {frameworkNextIndex + 1}</p>
+                <p className="phase-index">{texts.phase} {frameworkNextIndex + 1}</p>
                 <p className="macro">{frameworkNext.macroQuestion}</p>
                 <h3>{frameworkNext.title}</h3>
                 <p>
-                  <strong>Objective:</strong> {frameworkNext.objective}
+                  <strong>{texts.labels.objective}:</strong> {frameworkNext.objective}
                 </p>
               </article>
             </div>
 
-            <div className="framework-mobile-nav" aria-label="Mobile framework navigation">
-              <button type="button" onClick={goFrameworkLeft} aria-label="Go to previous phase">
-                Previous
+            <div className="framework-mobile-nav" aria-label={texts.navigation.mobileAria}>
+              <button type="button" onClick={goFrameworkLeft} aria-label={texts.navigation.gotoPrevPhaseAria}>
+                {texts.previous}
               </button>
               <p>
-                Phase {frameworkPhaseIndex + 1} of {phases.length}
+                {texts.phase} {frameworkPhaseIndex + 1} {texts.of} {phases.length}
               </p>
-              <button type="button" onClick={goFrameworkRight} aria-label="Go to next phase">
-                Next
+              <button type="button" onClick={goFrameworkRight} aria-label={texts.navigation.gotoNextPhaseAria}>
+                {texts.next}
               </button>
             </div>
 
-            <div className="framework-dots" aria-label="Framework phase navigation">
+            <div className="framework-dots" aria-label={texts.navigation.phaseNavAria}>
               {phases.map((phase, index) => (
                 <button
                   key={phase.id}
                   type="button"
                   className={index === frameworkPhaseIndex ? 'active' : ''}
                   onClick={() => goToFrameworkPhase(index)}
-                  aria-label={`Go to phase ${index + 1}: ${phase.title}`}
+                  aria-label={texts.navigation.gotoPhaseAria(index + 1, phase.title)}
                   aria-current={index === frameworkPhaseIndex ? 'true' : undefined}
                 />
               ))}
@@ -612,10 +1006,10 @@ function App() {
         <section className="studio">
           <div className="apply-mobile-panel">
             <div className="apply-mobile-progress">
-              <p>Design progress</p>
+              <p>{texts.labels.designProgress}</p>
               <strong>{completion.percentage}%</strong>
               <span>
-                {completion.completed} of {completion.total} phases completed
+                {texts.labels.phasesCompleted(completion.completed, completion.total)}
               </span>
               <div className="wizard-track" aria-hidden="true">
                 <span className="wizard-fill" style={{ width: `${completion.percentage}%` }} />
@@ -623,7 +1017,7 @@ function App() {
             </div>
 
             <div className="apply-mobile-phase-picker">
-              <label htmlFor="mobile-phase-picker">Current phase</label>
+              <label htmlFor="mobile-phase-picker">{texts.labels.currentPhase}</label>
               <select
                 id="mobile-phase-picker"
                 value={currentPhaseIndex}
@@ -639,23 +1033,23 @@ function App() {
 
             <div className="apply-mobile-actions">
               <button type="button" onClick={loadExamples}>
-                Load Helena draft
+                {texts.labels.loadDraft}
               </button>
               <button type="button" onClick={clearApply}>
-                Reset
+                {texts.labels.reset}
               </button>
               <button type="button" onClick={openPdfPreview}>
-                Open PDF preview
+                {texts.labels.openPdfPreview}
               </button>
             </div>
           </div>
 
           <aside className="studio-sidebar">
             <div className="progress-card">
-              <p>Design progress</p>
+              <p>{texts.labels.designProgress}</p>
               <strong>{completion.percentage}%</strong>
               <span>
-                {completion.completed} of {completion.total} phases completed
+                {texts.labels.phasesCompleted(completion.completed, completion.total)}
               </span>
               <div className="wizard-track" aria-hidden="true">
                 <span className="wizard-fill" style={{ width: `${completion.percentage}%` }} />
@@ -674,7 +1068,9 @@ function App() {
                   <span className="step-title">{phase.title}</span>
                   <span
                     className={`step-state ${phaseIsCompleted(phase.id) ? 'done' : ''}`}
-                    aria-label={phaseIsCompleted(phase.id) ? 'Completed phase' : 'Pending phase'}
+                    aria-label={
+                      phaseIsCompleted(phase.id) ? texts.labels.completedPhase : texts.labels.pendingPhase
+                    }
                   />
                 </button>
               ))}
@@ -682,13 +1078,13 @@ function App() {
 
             <div className="actions">
               <button type="button" onClick={loadExamples}>
-                Load Helena draft
+                {texts.labels.loadDraft}
               </button>
               <button type="button" onClick={clearApply}>
-                Reset
+                {texts.labels.reset}
               </button>
               <button type="button" onClick={openPdfPreview}>
-                Open PDF preview
+                {texts.labels.openPdfPreview}
               </button>
             </div>
           </aside>
@@ -696,7 +1092,7 @@ function App() {
           <article className="stage-card">
             <header className="stage-header">
               <p className="phase-index">
-                Phase {currentPhaseIndex + 1} of {phases.length}
+                {texts.phase} {currentPhaseIndex + 1} {texts.of} {phases.length}
               </p>
               <p className="macro">{currentPhase.macroQuestion}</p>
               <h2>{currentPhase.title}</h2>
@@ -705,30 +1101,29 @@ function App() {
             <div className="stage-layout">
               <section className="stage-main">
                 <label htmlFor={`answer-${currentPhase.id}`} className="input-label">
-                  Build this phase
+                  {texts.labels.buildPhase}
                 </label>
                 <textarea
                   id={`answer-${currentPhase.id}`}
                   value={currentPhaseApply.plan}
                   onChange={(event) => updatePlan(currentPhase.id, event.target.value)}
-                  placeholder="Write your pedagogical architecture for this phase..."
+                  placeholder={texts.labels.textareaPlaceholder}
                   rows={11}
                 />
                 <p className="helper-line">
-                  Tip: write objective, activity decisions, and how this phase connects to evidence
-                  of learning.
+                  {texts.labels.tip}
                 </p>
 
-                <section className="inline-checklist" aria-label="Checklist">
-                  <h3>Checklist</h3>
+                <section className="inline-checklist" aria-label={texts.labels.checklist}>
+                  <h3>{texts.labels.checklist}</h3>
                   <ul>
-                    {currentPhase.checklist.map((item) => (
+                    {currentPhase.checklist.map((item, itemIndex) => (
                       <li key={item}>
                         <label>
                           <input
                             type="checkbox"
-                            checked={currentPhaseApply.selectedChecklist.includes(item)}
-                            onChange={() => toggleChecklist(currentPhase.id, item)}
+                            checked={currentPhaseApply.selectedChecklist.includes(itemIndex)}
+                            onChange={() => toggleChecklist(currentPhase.id, itemIndex)}
                           />
                           {item}
                         </label>
@@ -740,23 +1135,23 @@ function App() {
 
               <aside className="stage-support">
                 <details open>
-                  <summary>Guidance</summary>
+                  <summary>{texts.labels.guidance}</summary>
                   <p>
-                    <strong>Directed question:</strong> {currentPhase.directedQuestion}
+                    <strong>{texts.labels.directedQuestion}:</strong> {currentPhase.directedQuestion}
                   </p>
                   <p>
-                    <strong>What it is:</strong> {currentPhase.whatIs}
+                    <strong>{texts.labels.whatIs}:</strong> {currentPhase.whatIs}
                   </p>
                   <p>
-                    <strong>Objective:</strong> {currentPhase.objective}
+                    <strong>{texts.labels.objective}:</strong> {currentPhase.objective}
                   </p>
                   <p>
-                    <strong>Helena example:</strong> {currentPhase.example}
+                    <strong>{texts.labels.example}:</strong> {currentPhase.example}
                   </p>
                 </details>
 
                 <details className="support-references">
-                  <summary>ABNT references</summary>
+                  <summary>{texts.labels.references}</summary>
                   <ul>
                     {currentPhase.references.map((reference) => (
                       <li key={reference.abnt}>
@@ -777,14 +1172,14 @@ function App() {
                 onClick={goToPreviousPhase}
                 disabled={currentPhaseIndex === 0}
               >
-                Previous phase
+                {texts.labels.previousPhase}
               </button>
               <button
                 type="button"
                 onClick={goToNextPhase}
                 disabled={currentPhaseIndex === phases.length - 1}
               >
-                Next phase
+                {texts.labels.nextPhase}
               </button>
             </footer>
           </article>
