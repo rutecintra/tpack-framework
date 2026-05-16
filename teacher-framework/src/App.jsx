@@ -2,16 +2,15 @@ import { useEffect, useMemo, useState } from 'react'
 import { jsPDF } from 'jspdf'
 import './App.css'
 
+const buildSourceLink = (fileName) => `${import.meta.env.BASE_URL}sources/${encodeURIComponent(fileName)}`
+
 const sourceLinks = {
-  interadPaper: 'file:///Users/rutecintra/Documents/framework/sources/2577101.2577106.pdf',
-  limaTdic:
-    'file:///Users/rutecintra/Documents/framework/sources/ARTIGO_IVONALDO_PEREIRA_DE_LIMA.pdf',
-  collMonereo:
-    'file:///Users/rutecintra/Documents/framework/sources/COLL_MONEREO_Psicologia%20da%20Educa%C3%A7%C3%A3o%20Virtual-p%C3%A1ginas.pdf',
-  tangibleInterfaces:
-    'file:///Users/rutecintra/Documents/framework/sources/Interfaces_tangiveis_e_o_design_de_ambientes_educa.pdf',
-  tpack: 'file:///Users/rutecintra/Documents/framework/sources/Koehler_et_al_2013.pdf',
-  didactics: 'file:///Users/rutecintra/Documents/framework/sources/Livro%20Didatica.pdf',
+  interadPaper: buildSourceLink('2577101.2577106.pdf'),
+  limaTdic: buildSourceLink('ARTIGO_IVONALDO_PEREIRA_DE_LIMA.pdf'),
+  collMonereo: buildSourceLink('COLL_MONEREO_Psicologia da Educação Virtual-páginas.pdf'),
+  tangibleInterfaces: buildSourceLink('Interfaces_tangiveis_e_o_design_de_ambientes_educa.pdf'),
+  tpack: buildSourceLink('Koehler_et_al_2013.pdf'),
+  didactics: buildSourceLink('Livro Didatica.pdf'),
 }
 
 const uiText = {
