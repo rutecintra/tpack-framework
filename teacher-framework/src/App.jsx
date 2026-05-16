@@ -371,60 +371,74 @@ function App() {
 
     const pageWidth = doc.internal.pageSize.getWidth()
     const pageHeight = doc.internal.pageSize.getHeight()
-    const marginX = 44
+    const marginX = 60
     const maxWidth = pageWidth - marginX * 2
-    const bottomMargin = 48
-    let cursorY = 52
+    const bottomMargin = 56
+    let cursorY = 64
 
-    const ensurePageSpace = (neededHeight = 16) => {
+    const ensurePageSpace = (neededHeight = 24) => {
       if (cursorY + neededHeight > pageHeight - bottomMargin) {
         doc.addPage()
-        cursorY = 52
+        cursorY = 64
       }
     }
 
     const writeLine = (text, options = {}) => {
-      const { fontSize = 11, bold = false, gapAfter = 8 } = options
+      const { fontSize = 12, bold = false, gapAfter = 12, lineHeight = fontSize + 6 } = options
       doc.setFont('helvetica', bold ? 'bold' : 'normal')
       doc.setFontSize(fontSize)
       const lines = doc.splitTextToSize(text, maxWidth)
-      const estimatedHeight = lines.length * (fontSize + 2)
+      const estimatedHeight = lines.length * lineHeight
       ensurePageSpace(estimatedHeight + gapAfter)
       doc.text(lines, marginX, cursorY)
       cursorY += estimatedHeight + gapAfter
     }
 
-    writeLine('Instructional Design Framework Report', { fontSize: 16, bold: true, gapAfter: 6 })
+    const drawSeparator = (gapBefore = 12, gapAfter = 22) => {
+      ensurePageSpace(gapBefore + gapAfter + 8)
+      cursorY += gapBefore
+      doc.setDrawColor(203, 213, 225)
+      doc.setLineWidth(0.8)
+      doc.line(marginX, cursorY, pageWidth - marginX, cursorY)
+      cursorY += gapAfter
+    }
+
+    writeLine('Instructional Design Framework Report', { fontSize: 18, bold: true, gapAfter: 12 })
     writeLine(
       `Generated on ${new Date().toLocaleDateString('en-US')} at ${new Date().toLocaleTimeString(
         'en-US',
       )}.`,
-      { fontSize: 10, gapAfter: 16 },
+      { fontSize: 11, gapAfter: 22, lineHeight: 18 },
     )
+    drawSeparator(0, 28)
 
     phases.forEach((phase, index) => {
-      writeLine(`Phase ${index + 1}: ${phase.title}`, { fontSize: 13, bold: true, gapAfter: 6 })
-      writeLine(`Macro question: ${phase.macroQuestion}`, { fontSize: 11, gapAfter: 4 })
-      writeLine(`Directed question: ${phase.directedQuestion}`, { fontSize: 11, gapAfter: 6 })
+      writeLine(`Phase ${index + 1}: ${phase.title}`, { fontSize: 15, bold: true, gapAfter: 12 })
+      writeLine(`Macro question: ${phase.macroQuestion}`, { fontSize: 12, gapAfter: 10 })
+      writeLine(`Directed question: ${phase.directedQuestion}`, { fontSize: 12, gapAfter: 12 })
       writeLine(
         `Teacher architecture: ${
           applyData[phase.id].plan.trim() || 'Not filled yet.'
         }`,
-        { fontSize: 11, gapAfter: 6 },
+        { fontSize: 12, gapAfter: 12 },
       )
 
       const checklistText =
         applyData[phase.id].selectedChecklist.length > 0
           ? applyData[phase.id].selectedChecklist.join(' | ')
           : 'No checklist item selected.'
-      writeLine(`Checked decisions: ${checklistText}`, { fontSize: 11, gapAfter: 6 })
+      writeLine(`Checked decisions: ${checklistText}`, { fontSize: 12, gapAfter: 12 })
 
-      writeLine('ABNT references:', { fontSize: 11, bold: true, gapAfter: 4 })
-      phase.references.forEach((reference) => {
-        writeLine(`- ${reference.abnt}`, { fontSize: 10, gapAfter: 2 })
-        writeLine(`Source link: ${reference.link}`, { fontSize: 10, gapAfter: 5 })
+      writeLine('ABNT references:', { fontSize: 10, bold: true, gapAfter: 5, lineHeight: 15 })
+      phase.references.forEach((reference, referenceIndex) => {
+        writeLine(`Reference ${referenceIndex + 1}: ${reference.abnt}`, {
+          fontSize: 11,
+          gapAfter: 2,
+          lineHeight: 17,
+        })
+        writeLine(`Source link: ${reference.link}`, { fontSize: 11, gapAfter: 2, lineHeight: 17 })
       })
-      writeLine('', { fontSize: 10, gapAfter: 8 })
+      drawSeparator(6, 24)
     })
 
     const blobUrl = doc.output('bloburl')
@@ -566,6 +580,18 @@ function App() {
               </article>
             </div>
 
+            <div className="framework-mobile-nav" aria-label="Mobile framework navigation">
+              <button type="button" onClick={goFrameworkLeft} aria-label="Go to previous phase">
+                Previous
+              </button>
+              <p>
+                Phase {frameworkPhaseIndex + 1} of {phases.length}
+              </p>
+              <button type="button" onClick={goFrameworkRight} aria-label="Go to next phase">
+                Next
+              </button>
+            </div>
+
             <div className="framework-dots" aria-label="Framework phase navigation">
               {phases.map((phase, index) => (
                 <button
@@ -584,6 +610,46 @@ function App() {
 
       {mode === 'apply' && (
         <section className="studio">
+          <div className="apply-mobile-panel">
+            <div className="apply-mobile-progress">
+              <p>Design progress</p>
+              <strong>{completion.percentage}%</strong>
+              <span>
+                {completion.completed} of {completion.total} phases completed
+              </span>
+              <div className="wizard-track" aria-hidden="true">
+                <span className="wizard-fill" style={{ width: `${completion.percentage}%` }} />
+              </div>
+            </div>
+
+            <div className="apply-mobile-phase-picker">
+              <label htmlFor="mobile-phase-picker">Current phase</label>
+              <select
+                id="mobile-phase-picker"
+                value={currentPhaseIndex}
+                onChange={(event) => setCurrentPhaseIndex(Number(event.target.value))}
+              >
+                {phases.map((phase, index) => (
+                  <option key={phase.id} value={index}>
+                    {index + 1}. {phase.title}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="apply-mobile-actions">
+              <button type="button" onClick={loadExamples}>
+                Load Helena draft
+              </button>
+              <button type="button" onClick={clearApply}>
+                Reset
+              </button>
+              <button type="button" onClick={openPdfPreview}>
+                Open PDF preview
+              </button>
+            </div>
+          </div>
+
           <aside className="studio-sidebar">
             <div className="progress-card">
               <p>Design progress</p>
