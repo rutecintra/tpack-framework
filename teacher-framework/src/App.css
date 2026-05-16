@@ -745,6 +745,18 @@
   display: block;
 }
 
+.about-photo-fallback {
+  width: 100%;
+  height: 260px;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #4338ca;
+  background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+}
+
 .about-content {
   padding: 0.85rem 0.9rem 0.95rem;
   display: grid;
@@ -761,6 +773,37 @@
   color: #334155;
   line-height: 1.55;
   font-size: 0.92rem;
+}
+
+.about-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.about-description.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  overflow: visible;
+}
+
+.about-toggle {
+  justify-self: start;
+  border: none;
+  background: transparent;
+  color: #4338ca;
+  font-weight: 650;
+  font-size: 0.86rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+.about-toggle:hover {
+  color: #312e81;
+  text-decoration: underline;
 }
 
 @media (max-width: 1080px) {
@@ -1058,6 +1101,11 @@
 
   .about-card img {
     height: 220px;
+  }
+
+  .about-photo-fallback {
+    height: 220px;
+    font-size: 1.8rem;
   }
 
   .wizard-nav {

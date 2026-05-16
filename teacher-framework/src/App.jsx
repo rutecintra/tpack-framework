@@ -31,6 +31,8 @@ const uiText = {
       title: 'The Team Behind This Framework',
       subtitle:
         'Meet the professionals responsible for designing and developing this instructional design framework.',
+      readMore: 'Read more',
+      readLess: 'Read less',
     },
     introTiles: [
       { label: '7 phases', value: 'Pedagogy-first structure' },
@@ -104,6 +106,8 @@ const uiText = {
       title: 'Equipe Responsável por Este Framework',
       subtitle:
         'Conheça as profissionais responsáveis pela concepção e desenvolvimento deste framework de design instrucional.',
+      readMore: 'Ler mais',
+      readLess: 'Ler menos',
     },
     introTiles: [
       { label: '7 fases', value: 'Estrutura com foco na pedagogia' },
@@ -658,6 +662,24 @@ const teamByLanguage = {
       description:
         'Psychologist and neuropsychologist with 20 years of clinical practice, including 14 years at Clinica Reprocessamente/Espaco Psicoterapico, where she is also the Technical Lead. She works with Gestalt Therapy and EMDR Therapy. She is a professor with a master degree at UNCISAL, graduated from UFAL, holds a master degree in Health Education (SUS Context) from FAMED/UFAL, and is currently a PhD candidate in Teaching at RENOEN (UFAL campus).',
     },
+    {
+      name: 'Amanda Marques',
+      photo: `${import.meta.env.BASE_URL}photos/amanda-marques.jpeg`,
+      description:
+        'Professor, Psychopedagogue, and Educational Consultant with strong academic training and professional experience in Early Childhood Education, Elementary Education, pedagogical guidance, psychopedagogy, teacher education, and higher education. She is a PhD candidate in Teaching at RENOEN/UFAL and holds a Master degree in Science and Mathematics Teaching, with specializations in Inclusive Education and Active Methodologies. She has extensive experience in planning, developing, and delivering teaching activities, as well as academic advising for research projects, internship reports, scientific papers, and academic writing aligned with scientific methodology and ABNT standards. She works in initial and continuing education for students and education professionals, connecting theory, pedagogical practice, and didactic-methodological innovation. She also contributes to educational projects, training development, technical reporting, and interdisciplinary collaboration with pedagogical teams and managers, supporting improvements in teaching, research, and university extension.',
+    },
+    {
+      name: 'Maria Luisa Martins da Silva',
+      photo: `${import.meta.env.BASE_URL}photos/maria-luisa.jpeg`,
+      description:
+        'Holds a Pedagogy degree from the Federal University of Alagoas (UFAL), advanced English proficiency, and experience in Education. She participated in UFAL programs such as PIBID (2018-2020), focused on literacy in early Elementary School, and Pedagogical Residency (2020-2022), focused on literacy in Early Childhood Education. She is currently an English teacher in a private school network in Maceio, Alagoas, a member of the Reflective and Digital Narratives research group at UFAL, a specialist in Educational Management (UFAL), a Master candidate in Education at PPGE/UFAL, and an undergraduate student in Distance English Language and Literature at UFAL.',
+    },
+    {
+      name: 'Larissa Alves',
+      photo: `${import.meta.env.BASE_URL}photos/larissa-alves.jpeg`,
+      description:
+        'Holds a Pedagogy degree from the Federal University of Alagoas and is a Master candidate in Education at PPGE (CEDU/UFAL), with research focused on literacy. She also works as a teacher educator in Literacy and Special Education and is a member of the Teaching, Text and Creation (ETC) research group and the School Manuscript Laboratory (LAME/UFAL).',
+    },
   ],
   port: [
     {
@@ -678,6 +700,24 @@ const teamByLanguage = {
       description:
         'Psicologa e neuropsicologa, atua na area clinica ha 20 anos, sendo 14 deles na Clinica Reprocessamente/Espaco Psicoterapico, onde tambem e Responsavel Tecnica. Trabalha com duas abordagens: Gestalt-Terapia e Terapia EMDR. Professora mestra da Universidade Estadual de Ciencias da Saude de Alagoas (UNCISAL), graduada pela UFAL, com mestrado em Ensino na Saude - Contexto SUS pela FAMED/UFAL, e doutoranda em Ensino no Programa de Pos-Graduacao da Rede Nordeste de Ensino (RENOEN), polo UFAL.',
     },
+    {
+      name: 'Amanda Marques',
+      photo: `${import.meta.env.BASE_URL}photos/amanda-marques.jpeg`,
+      description:
+        'Sou Professora, Psicopedagoga e Consultora Educacional, com solida formacao e experiencia nas areas de Educacao Infantil, Anos Iniciais, orientacao pedagogica, psicopedagogia, formacao docente e ensino superior. Sou Doutoranda pelo Programa de Pos-Graduacao em Ensino (RENOEN) da Universidade Federal de Alagoas (UFAL) e Mestre em Ensino de Ciencias e Matematica, com especializacoes em Educacao Inclusiva e Metodologias Ativas. Possuo experiencia no planejamento, desenvolvimento e execucao de atividades de ensino, bem como na orientacao academica para elaboracao de projetos de pesquisa, relatorios de estagio, artigos cientificos e demais producoes academicas, com dominio da metodologia cientifica e das normas da ABNT. Atuo na formacao inicial e continuada de estudantes e profissionais da educacao, articulando fundamentos teoricos, praticas pedagogicas e inovacao didatico-metodologica. Apresento tambem experiencia em projetos educacionais, desenvolvimento de treinamentos, elaboracao de relatorios tecnicos e atuacao interdisciplinar com equipes pedagogicas e gestores, contribuindo para a qualificacao do ensino, da pesquisa e da extensao universitaria.',
+    },
+    {
+      name: 'Maria Luisa Martins da Silva',
+      photo: `${import.meta.env.BASE_URL}photos/maria-luisa.jpeg`,
+      description:
+        'Graduada em Pedagogia pela Universidade Federal de Alagoas. Nivel avancado de Ingles. Participou do Programa Institucional de Bolsa de Iniciacao a Docencia (PIBID) da Universidade Federal de Alagoas (UFAL) com o subprojeto de Pedagogia intitulado: Alfabetizacao e letramento na primeira etapa do Ensino Fundamental (2018 ate 2020). Participou do Programa Residencia Pedagogica (PRP) da Universidade Federal de Alagoas (UFAL) com o subprojeto de Pedagogia intitulado: Alfabetizacao e letramento na Educacao Infantil (2020 ate 2022). Tem experiencia na area de Educacao. Atualmente e Professora de Ingles da rede privada em Maceio-Alagoas. Integrante do grupo de pesquisa Narrativas Reflexivas e Digitais pela Universidade Federal de Alagoas. Especialista em Gestao Educacional pela Universidade Federal de Alagoas. Mestranda em Educacao pelo Programa de Pos-Graduacao em Educacao (PPGE) - UFAL. Graduanda em Letras-Ingles a distancia pela Universidade Federal de Alagoas.',
+    },
+    {
+      name: 'Larissa Alves',
+      photo: `${import.meta.env.BASE_URL}photos/larissa-alves.jpeg`,
+      description:
+        'Graduada em Pedagogia pela Universidade Federal de Alagoas. Mestranda em Educacao pelo Programa de Pos-Graduacao em Educacao (CEDU/UFAL), com pesquisas voltadas para o campo de Alfabetizacao, e formadora docente nas areas de Alfabetizacao e Educacao Especial. Membro do grupo de pesquisa Ensino, Texto & Criacao (ETC) e do Laboratorio do Manuscrito Escolar (LAME/UFAL).',
+    },
   ],
 }
 
@@ -687,6 +727,7 @@ function App() {
   const [applyData, setApplyData] = useState(defaultApplyData)
   const [currentPhaseIndex, setCurrentPhaseIndex] = useState(0)
   const [frameworkPhaseIndex, setFrameworkPhaseIndex] = useState(0)
+  const [expandedProfiles, setExpandedProfiles] = useState({})
   const texts = uiText[language]
   const phases = phasesByLanguage[language]
   const teamMembers = teamByLanguage[language]
@@ -764,6 +805,21 @@ function App() {
   const goToFrameworkPhase = (index) => {
     setFrameworkPhaseIndex(index)
   }
+
+  const toggleProfileDescription = (memberName) => {
+    setExpandedProfiles((current) => ({
+      ...current,
+      [memberName]: !current[memberName],
+    }))
+  }
+
+  const getMemberInitials = (fullName) =>
+    fullName
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((namePart) => namePart[0]?.toUpperCase() || '')
+      .join('')
 
   useEffect(() => {
     document.documentElement.lang = language === 'port' ? 'pt-BR' : 'en'
@@ -1254,10 +1310,27 @@ function App() {
           <div className="about-grid">
             {teamMembers.map((member) => (
               <article key={member.name} className="about-card">
-                <img src={member.photo} alt={member.name} loading="lazy" />
+                {member.photo ? (
+                  <img src={member.photo} alt={member.name} loading="lazy" />
+                ) : (
+                  <div className="about-photo-fallback" aria-hidden="true">
+                    {getMemberInitials(member.name)}
+                  </div>
+                )}
                 <div className="about-content">
                   <h3>{member.name}</h3>
-                  <p>{member.description}</p>
+                  <p className={expandedProfiles[member.name] ? 'about-description expanded' : 'about-description'}>
+                    {member.description}
+                  </p>
+                  {member.description.length > 220 && (
+                    <button
+                      type="button"
+                      className="about-toggle"
+                      onClick={() => toggleProfileDescription(member.name)}
+                    >
+                      {expandedProfiles[member.name] ? texts.aboutSection.readLess : texts.aboutSection.readMore}
+                    </button>
+                  )}
                 </div>
               </article>
             ))}
