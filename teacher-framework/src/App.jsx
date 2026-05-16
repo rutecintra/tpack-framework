@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { jsPDF } from 'jspdf'
 import './App.css'
 
@@ -259,6 +259,8 @@ const defaultApplyData = phases.reduce((acc, phase) => {
 function App() {
   const [mode, setMode] = useState('framework')
   const [applyData, setApplyData] = useState(defaultApplyData)
+  const [currentPhaseIndex, setCurrentPhaseIndex] = useState(0)
+  const [frameworkPhaseIndex, setFrameworkPhaseIndex] = useState(0)
 
   const completion = useMemo(() => {
     const completed = phases.filter((phase) => applyData[phase.id].plan.trim().length > 0).length
@@ -307,7 +309,59 @@ function App() {
 
   const clearApply = () => {
     setApplyData(defaultApplyData)
+    setCurrentPhaseIndex(0)
   }
+
+  const currentPhase = phases[currentPhaseIndex]
+  const currentPhaseApply = applyData[currentPhase.id]
+  const phaseIsCompleted = (phaseId) => applyData[phaseId].plan.trim().length > 0
+
+  const goToNextPhase = () => {
+    setCurrentPhaseIndex((current) => Math.min(current + 1, phases.length - 1))
+  }
+
+  const goToPreviousPhase = () => {
+    setCurrentPhaseIndex((current) => Math.max(current - 1, 0))
+  }
+
+  const goFrameworkLeft = () => {
+    setFrameworkPhaseIndex((current) => (current - 1 + phases.length) % phases.length)
+  }
+
+  const goFrameworkRight = () => {
+    setFrameworkPhaseIndex((current) => (current + 1) % phases.length)
+  }
+
+  const goToFrameworkPhase = (index) => {
+    setFrameworkPhaseIndex(index)
+  }
+
+  useEffect(() => {
+    if (mode !== 'framework') {
+      return undefined
+    }
+
+    const handleKeydown = (event) => {
+      if (event.key === 'ArrowLeft') {
+        setFrameworkPhaseIndex((current) => (current - 1 + phases.length) % phases.length)
+      }
+
+      if (event.key === 'ArrowRight') {
+        setFrameworkPhaseIndex((current) => (current + 1) % phases.length)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeydown)
+    return () => {
+      window.removeEventListener('keydown', handleKeydown)
+    }
+  }, [mode])
+
+  const frameworkCurrent = phases[frameworkPhaseIndex]
+  const frameworkPrevIndex = (frameworkPhaseIndex - 1 + phases.length) % phases.length
+  const frameworkNextIndex = (frameworkPhaseIndex + 1) % phases.length
+  const frameworkPrev = phases[frameworkPrevIndex]
+  const frameworkNext = phases[frameworkNextIndex]
 
   const openPdfPreview = () => {
     const doc = new jsPDF({
@@ -379,156 +433,297 @@ function App() {
 
   return (
     <main className="app-shell">
-      <header className="hero">
-        <h1>Instructional Design Framework for Teachers</h1>
-        <p>
-          A seven-phase framework to plan, justify, and document technology-mediated learning
-          activities.
-        </p>
+      <div className="ambient ambient-1" aria-hidden="true" />
+      <div className="ambient ambient-2" aria-hidden="true" />
+
+      <header className="topbar">
+        <div>
+          <p className="kicker">Teacher Experience Studio</p>
+          <h1>Instructional Design Framework</h1>
+          <p className="subtitle">
+            A modern workspace to design, validate, and export technology-mediated lessons.
+          </p>
+        </div>
         <div className="mode-picker">
           <button
             type="button"
             className={mode === 'framework' ? 'active' : ''}
             onClick={() => setMode('framework')}
           >
-            View framework
-          </button>
-          <button
-            type="button"
-            className={mode === 'example' ? 'active' : ''}
-            onClick={() => setMode('example')}
-          >
-            View only example
+            Framework
           </button>
           <button
             type="button"
             className={mode === 'apply' ? 'active' : ''}
-            onClick={() => setMode('apply')}
+            onClick={() => {
+              setMode('apply')
+              setCurrentPhaseIndex(0)
+            }}
           >
-            Apply framework
+            Apply
           </button>
         </div>
       </header>
 
       {mode === 'framework' && (
-        <section className="panel">
-          <h2>Framework overview</h2>
-          <p>
-            Each phase uses the same structure: directed question, meaning, objective, example,
-            decisions/checklist, and ABNT references.
-          </p>
-        </section>
-      )}
+        <>
+          <section className="intro-strip">
+            <div className="intro-tile">
+              <span>7 phases</span>
+              <strong>Pedagogy-first structure</strong>
+            </div>
+            <div className="intro-tile">
+              <span>ABNT grounded</span>
+              <strong>References + source links by phase</strong>
+            </div>
+            <div className="intro-tile">
+              <span>Export-ready</span>
+              <strong>PDF output for planning documentation</strong>
+            </div>
+          </section>
 
-      {mode === 'example' && (
-        <section className="panel">
-          <h2>Example-only mode</h2>
-          <p>
-            This mode shows only the pre-filled model inspired by your requested teacher scenario.
-          </p>
-        </section>
+          <section className="framework-spotlight">
+            <div className="framework-carousel">
+              <article
+                className="phase-card side-card left"
+                onClick={goFrameworkLeft}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    goFrameworkLeft()
+                  }
+                }}
+                aria-label={`Go to previous phase: ${frameworkPrev.title}`}
+              >
+                <p className="phase-index">Phase {frameworkPrevIndex + 1}</p>
+                <p className="macro">{frameworkPrev.macroQuestion}</p>
+                <h3>{frameworkPrev.title}</h3>
+                <p>
+                  <strong>Objective:</strong> {frameworkPrev.objective}
+                </p>
+              </article>
+
+              <article className="phase-card center-card">
+                <p className="phase-index">Phase {frameworkPhaseIndex + 1}</p>
+                <p className="macro">{frameworkCurrent.macroQuestion}</p>
+                <h3>{frameworkCurrent.title}</h3>
+                <p>
+                  <strong>Directed question:</strong> {frameworkCurrent.directedQuestion}
+                </p>
+                <p>
+                  <strong>What it is:</strong> {frameworkCurrent.whatIs}
+                </p>
+                <p>
+                  <strong>Objective:</strong> {frameworkCurrent.objective}
+                </p>
+                <p>
+                  <strong>Helena example:</strong> {frameworkCurrent.example}
+                </p>
+                <div className="checklist">
+                  <strong>Decisions / checklist</strong>
+                  <ul>
+                    {frameworkCurrent.checklist.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+                <details className="references references-collapse">
+                  <summary>ABNT references</summary>
+                  <ul>
+                    {frameworkCurrent.references.map((reference) => (
+                      <li key={reference.abnt}>
+                        <span>{reference.abnt}</span>
+                        <a href={reference.link} target="_blank" rel="noreferrer">
+                          {reference.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </article>
+
+              <article
+                className="phase-card side-card right"
+                onClick={goFrameworkRight}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    goFrameworkRight()
+                  }
+                }}
+                aria-label={`Go to next phase: ${frameworkNext.title}`}
+              >
+                <p className="phase-index">Phase {frameworkNextIndex + 1}</p>
+                <p className="macro">{frameworkNext.macroQuestion}</p>
+                <h3>{frameworkNext.title}</h3>
+                <p>
+                  <strong>Objective:</strong> {frameworkNext.objective}
+                </p>
+              </article>
+            </div>
+
+            <div className="framework-dots" aria-label="Framework phase navigation">
+              {phases.map((phase, index) => (
+                <button
+                  key={phase.id}
+                  type="button"
+                  className={index === frameworkPhaseIndex ? 'active' : ''}
+                  onClick={() => goToFrameworkPhase(index)}
+                  aria-label={`Go to phase ${index + 1}: ${phase.title}`}
+                  aria-current={index === frameworkPhaseIndex ? 'true' : undefined}
+                />
+              ))}
+            </div>
+          </section>
+        </>
       )}
 
       {mode === 'apply' && (
-        <section className="panel apply-controls">
-          <div>
-            <h2>Apply mode</h2>
-            <p>
-              Fill each phase, mark decisions, and print a complete instructional design report.
-            </p>
-            <p className="progress">
-              Completion: {completion.completed}/{completion.total} phases ({completion.percentage}
-              %)
-            </p>
-          </div>
-          <div className="actions">
-            <button type="button" onClick={loadExamples}>
-              Load Helena example as draft
-            </button>
-            <button type="button" onClick={clearApply}>
-              Clear all answers
-            </button>
-            <button type="button" onClick={openPdfPreview}>
-              Open PDF preview
-            </button>
-          </div>
-        </section>
-      )}
+        <section className="studio">
+          <aside className="studio-sidebar">
+            <div className="progress-card">
+              <p>Design progress</p>
+              <strong>{completion.percentage}%</strong>
+              <span>
+                {completion.completed} of {completion.total} phases completed
+              </span>
+              <div className="wizard-track" aria-hidden="true">
+                <span className="wizard-fill" style={{ width: `${completion.percentage}%` }} />
+              </div>
+            </div>
 
-      <section className="phases-grid">
-        {phases.map((phase) => {
-          const phaseApply = applyData[phase.id]
+            <div className="steps-panel">
+              {phases.map((phase, index) => (
+                <button
+                  key={phase.id}
+                  type="button"
+                  className={index === currentPhaseIndex ? 'active' : ''}
+                  onClick={() => setCurrentPhaseIndex(index)}
+                >
+                  <span className="step-number">{index + 1}</span>
+                  <span className="step-title">{phase.title}</span>
+                  <span
+                    className={`step-state ${phaseIsCompleted(phase.id) ? 'done' : ''}`}
+                    aria-label={phaseIsCompleted(phase.id) ? 'Completed phase' : 'Pending phase'}
+                  />
+                </button>
+              ))}
+            </div>
 
-          return (
-            <article key={phase.id} className="phase-card">
-              <p className="macro">{phase.macroQuestion}</p>
-              <h3>{phase.title}</h3>
-              <p>
-                <strong>Directed question:</strong> {phase.directedQuestion}
+            <div className="actions">
+              <button type="button" onClick={loadExamples}>
+                Load Helena draft
+              </button>
+              <button type="button" onClick={clearApply}>
+                Reset
+              </button>
+              <button type="button" onClick={openPdfPreview}>
+                Open PDF preview
+              </button>
+            </div>
+          </aside>
+
+          <article className="stage-card">
+            <header className="stage-header">
+              <p className="phase-index">
+                Step {currentPhaseIndex + 1} of {phases.length}
               </p>
-              <p>
-                <strong>What it is:</strong> {phase.whatIs}
-              </p>
-              <p>
-                <strong>Objective:</strong> {phase.objective}
-              </p>
-              {(mode === 'example' || mode === 'framework') && (
-                <p>
-                  <strong>Example (Helena case):</strong> {phase.example}
+              <p className="macro">{currentPhase.macroQuestion}</p>
+              <h2>{currentPhase.title}</h2>
+            </header>
+
+            <div className="stage-layout">
+              <section className="stage-main">
+                <label htmlFor={`answer-${currentPhase.id}`} className="input-label">
+                  Build this phase
+                </label>
+                <textarea
+                  id={`answer-${currentPhase.id}`}
+                  value={currentPhaseApply.plan}
+                  onChange={(event) => updatePlan(currentPhase.id, event.target.value)}
+                  placeholder="Write your pedagogical architecture for this phase..."
+                  rows={11}
+                />
+                <p className="helper-line">
+                  Tip: write objective, activity decisions, and how this phase connects to evidence
+                  of learning.
                 </p>
-              )}
-              <div className="checklist">
-                <strong>Decisions / checklist</strong>
-                <ul>
-                  {phase.checklist.map((item) => (
-                    <li key={item}>
-                      {mode === 'apply' ? (
+              </section>
+
+              <aside className="stage-support">
+                <details open>
+                  <summary>Guidance</summary>
+                  <p>
+                    <strong>Directed question:</strong> {currentPhase.directedQuestion}
+                  </p>
+                  <p>
+                    <strong>What it is:</strong> {currentPhase.whatIs}
+                  </p>
+                  <p>
+                    <strong>Objective:</strong> {currentPhase.objective}
+                  </p>
+                  <p>
+                    <strong>Helena example:</strong> {currentPhase.example}
+                  </p>
+                </details>
+
+                <details open>
+                  <summary>Checklist</summary>
+                  <ul>
+                    {currentPhase.checklist.map((item) => (
+                      <li key={item}>
                         <label>
                           <input
                             type="checkbox"
-                            checked={phaseApply.selectedChecklist.includes(item)}
-                            onChange={() => toggleChecklist(phase.id, item)}
+                            checked={currentPhaseApply.selectedChecklist.includes(item)}
+                            onChange={() => toggleChecklist(currentPhase.id, item)}
                           />
                           {item}
                         </label>
-                      ) : (
-                        item
-                      )}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              {mode === 'apply' && (
-                <div className="apply-answer">
-                  <label htmlFor={`answer-${phase.id}`}>
-                    <strong>Your phase architecture</strong>
-                  </label>
-                  <textarea
-                    id={`answer-${phase.id}`}
-                    value={phaseApply.plan}
-                    onChange={(event) => updatePlan(phase.id, event.target.value)}
-                    placeholder="Write your plan for this phase..."
-                    rows={6}
-                  />
-                </div>
-              )}
-              <div className="references">
-                <strong>ABNT references</strong>
-                <ul>
-                  {phase.references.map((reference) => (
-                    <li key={reference.abnt}>
-                      <span>{reference.abnt}</span>
-                      <a href={reference.link} target="_blank" rel="noreferrer">
-                        {reference.label}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          )
-        })}
-      </section>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+
+                <details>
+                  <summary>ABNT references</summary>
+                  <ul>
+                    {currentPhase.references.map((reference) => (
+                      <li key={reference.abnt}>
+                        <span>{reference.abnt}</span>
+                        <a href={reference.link} target="_blank" rel="noreferrer">
+                          {reference.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              </aside>
+            </div>
+
+            <footer className="wizard-nav">
+              <button
+                type="button"
+                onClick={goToPreviousPhase}
+                disabled={currentPhaseIndex === 0}
+              >
+                Previous phase
+              </button>
+              <button
+                type="button"
+                onClick={goToNextPhase}
+                disabled={currentPhaseIndex === phases.length - 1}
+              >
+                Next phase
+              </button>
+            </footer>
+          </article>
+        </section>
+      )}
     </main>
   )
 }
