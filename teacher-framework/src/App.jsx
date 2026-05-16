@@ -25,6 +25,12 @@ const uiText = {
     modes: {
       framework: 'Framework',
       apply: 'Apply',
+      about: 'About us',
+    },
+    aboutSection: {
+      title: 'The Team Behind This Framework',
+      subtitle:
+        'Meet the professionals responsible for designing and developing this instructional design framework.',
     },
     introTiles: [
       { label: '7 phases', value: 'Pedagogy-first structure' },
@@ -92,6 +98,12 @@ const uiText = {
     modes: {
       framework: 'Framework',
       apply: 'Aplicar',
+      about: 'Sobre nós',
+    },
+    aboutSection: {
+      title: 'Equipe Responsável por Este Framework',
+      subtitle:
+        'Conheça as profissionais responsáveis pela concepção e desenvolvimento deste framework de design instrucional.',
     },
     introTiles: [
       { label: '7 fases', value: 'Estrutura com foco na pedagogia' },
@@ -626,6 +638,49 @@ const defaultApplyData = phaseIds.reduce((acc, phaseId) => {
   return acc
 }, {})
 
+const teamByLanguage = {
+  en: [
+    {
+      name: 'Rute Cintra',
+      photo: `${import.meta.env.BASE_URL}photos/rute-cintra.jpg`,
+      description:
+        'Researcher and developer with interdisciplinary work in Education and Educational Technology. Master candidate in Education at the Federal University of Alagoas (UFAL). Holds a degree in Pedagogy from UFAL, with previous experience in Computer Science. Works in research, development, and extension projects focused on educational inclusion, pedagogical innovation, and the integration of digital technologies in teaching, with emphasis on Computational Thinking and interdisciplinary unplugged computing.',
+    },
+    {
+      name: 'Mayara Rios',
+      photo: `${import.meta.env.BASE_URL}photos/mayara-rios.jpeg`,
+      description:
+        'Administrative Analyst at Hospital Universitario Professor Alberto Antunes (HUPAA) and PhD candidate in Teaching at UFAL. Holds a Master degree in Public Administration and an MBA in Business Management from FGV. With dual undergraduate degrees in Administration and Tourism, she also has international certification in Hospitality Management from UCF (Florida, USA) and experience in three Disney programs.',
+    },
+    {
+      name: 'Adriana Albuquerque',
+      photo: `${import.meta.env.BASE_URL}photos/adriana-albuquerque.jpeg`,
+      description:
+        'Psychologist and neuropsychologist with 20 years of clinical practice, including 14 years at Clinica Reprocessamente/Espaco Psicoterapico, where she is also the Technical Lead. She works with Gestalt Therapy and EMDR Therapy. She is a professor with a master degree at UNCISAL, graduated from UFAL, holds a master degree in Health Education (SUS Context) from FAMED/UFAL, and is currently a PhD candidate in Teaching at RENOEN (UFAL campus).',
+    },
+  ],
+  port: [
+    {
+      name: 'Rute Cintra',
+      photo: `${import.meta.env.BASE_URL}photos/rute-cintra.jpg`,
+      description:
+        'Pesquisadora e desenvolvedora com atuacao interdisciplinar nas areas de Educacao e Tecnologia Educacional. Mestranda pelo Programa de Pos-Graduacao em Educacao da Universidade Federal de Alagoas (UFAL). Graduada em Pedagogia pela UFAL, com experiencia previa em Ciencia da Computacao. Atua em projetos de pesquisa, desenvolvimento e extensao voltados a inclusao educacional, inovacao pedagogica e integracao de tecnologias digitais no ensino, com enfase em Pensamento Computacional e Computacao Desplugada Interdisciplinar.',
+    },
+    {
+      name: 'Mayara Rios',
+      photo: `${import.meta.env.BASE_URL}photos/mayara-rios.jpeg`,
+      description:
+        'Analista Administrativa no Hospital Universitario Professor Alberto Antunes (HUPAA) e doutoranda em Ensino pela UFAL. Mestre em Administracao Publica e MBA em Gestao Empresarial pela FGV. Com dupla graduacao em Administracao e Turismo, possui certificacao internacional em Gestao de Hospitalidade pela UCF (Florida-EUA) e vivencia em tres programas da Disney.',
+    },
+    {
+      name: 'Adriana Albuquerque',
+      photo: `${import.meta.env.BASE_URL}photos/adriana-albuquerque.jpeg`,
+      description:
+        'Psicologa e neuropsicologa, atua na area clinica ha 20 anos, sendo 14 deles na Clinica Reprocessamente/Espaco Psicoterapico, onde tambem e Responsavel Tecnica. Trabalha com duas abordagens: Gestalt-Terapia e Terapia EMDR. Professora mestra da Universidade Estadual de Ciencias da Saude de Alagoas (UNCISAL), graduada pela UFAL, com mestrado em Ensino na Saude - Contexto SUS pela FAMED/UFAL, e doutoranda em Ensino no Programa de Pos-Graduacao da Rede Nordeste de Ensino (RENOEN), polo UFAL.',
+    },
+  ],
+}
+
 function App() {
   const [mode, setMode] = useState('framework')
   const [language, setLanguage] = useState('en')
@@ -634,6 +689,7 @@ function App() {
   const [frameworkPhaseIndex, setFrameworkPhaseIndex] = useState(0)
   const texts = uiText[language]
   const phases = phasesByLanguage[language]
+  const teamMembers = teamByLanguage[language]
 
   const completion = useMemo(() => {
     const completed = phases.filter((phase) => applyData[phase.id].plan.trim().length > 0).length
@@ -867,6 +923,9 @@ function App() {
               }}
             >
               {texts.modes.apply}
+            </button>
+            <button type="button" className={mode === 'about' ? 'active' : ''} onClick={() => setMode('about')}>
+              {texts.modes.about}
             </button>
           </div>
         </div>
@@ -1182,6 +1241,27 @@ function App() {
               </button>
             </footer>
           </article>
+        </section>
+      )}
+
+      {mode === 'about' && (
+        <section className="about-section">
+          <header className="about-header">
+            <h2>{texts.aboutSection.title}</h2>
+            <p>{texts.aboutSection.subtitle}</p>
+          </header>
+
+          <div className="about-grid">
+            {teamMembers.map((member) => (
+              <article key={member.name} className="about-card">
+                <img src={member.photo} alt={member.name} loading="lazy" />
+                <div className="about-content">
+                  <h3>{member.name}</h3>
+                  <p>{member.description}</p>
+                </div>
+              </article>
+            ))}
+          </div>
         </section>
       )}
     </main>
